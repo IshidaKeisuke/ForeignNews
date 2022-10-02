@@ -1,19 +1,34 @@
 version: '3.9'
 services:
-  app:
+  backend:
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
-    ports:
-      - 8888:8889
+      dockerfile: ./docker/backend/app/Dockerfile
+    tty: true
     volumes:
-      - ./backend_app/:/app
+      - type: bind
+        source: ./backend
+        target: /api
+    ports:
+      - "3000:3000"
 
   db:
     build:
       context: .
-      dockerfile: ./docker/db/Dockerfile
+      dockerfile: ./docker/backend/db/Dockerfile
     ports:
       - 5435:5436
     volumes:
       - ./data:/var/lib/mysql
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/frontend/app/Dockerfile
+    tty: true
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+    ports:
+      - "3333:3333"
