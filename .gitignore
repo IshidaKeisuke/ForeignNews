@@ -3,3 +3,4 @@ dist
 data
 .next
 postgres
+data/
