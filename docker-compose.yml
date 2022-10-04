@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./docker/backend/app/Dockerfile
+      dockerfile: ./docker/backend/Dockerfile
     tty: true
     volumes:
       - type: bind

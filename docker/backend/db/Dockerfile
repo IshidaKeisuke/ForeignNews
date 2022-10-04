@@ -1,6 +1,0 @@
-FROM mysql:latest
-
-ENV MYSQL_ROOT_PASSWORD root
-ENV MYSQL_DATABASE database
-ENV MYSQL_USER user
-ENV MYSQL_PASSWORD password
