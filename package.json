@@ -3,7 +3,8 @@
     "@nestjs/common": "^9.1.2",
     "@nestjs/core": "^9.1.2",
     "@nestjs/platform-express": "^9.1.2",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.8.1"

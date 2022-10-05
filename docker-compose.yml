@@ -4,9 +4,8 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
-    ports:
-      - 8888:8889
+      dockerfile: ./docker/backend/app/Dockerfile
+    tty: true
     volumes:
       - type: bind
         source: ./backend
@@ -17,8 +16,11 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: ./docker/db/Dockerfile
-    ports:
-      - 5435:5436
+      dockerfile: ./docker/frontend/app/Dockerfile
+    tty: true
     volumes:
-      - ./data:/var/lib/mysql
+      - type: bind
+        source: ./frontend
+        target: /app
+    ports:
+      - "3333:3333"
