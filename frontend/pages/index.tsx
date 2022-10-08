@@ -1,37 +1,48 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { Todo } from '../types'
 
-const Home: NextPage = (props, todos) => {
-  return(
+interface Props {
+  todos: Todo[]
+}
+
+const Home: NextPage<Props> = ({todos}) => {
+  return (
     <div>
       <h2>
         Todo一覧
       </h2>
-      <table>
-        {todos.map((todo: any) => (
-          <tr>
-            <td>{todo.id}.</td>
-            <td>{todo.title}</td>
-          </tr>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+              <Link 
+                href={{
+                  pathname: '/todos/[id]',
+                  query: {id: todo.id},
+                }}
+              >
+                <p>{todo.id}</p>
+              </Link>
+                <p>{todo.todo}</p>
+          </li>
         ))}
-      </table>
+      </ul>
     </div>
   )
 }
 
 export const getStaticProps = async () => {
   const response = await fetch("http://localhost:3000/todos/", {method: "GET"});
-  var json = await response.json();
-  var json_arr = [json]
+  const todos = await response.json();
 
   return {
     props: {
-      todos: json_arr
+      todos,
     },
-  };
+  }
 }
-
 export default Home;
