@@ -1,3 +1,3 @@
-FROM node:latest
+FROM golang:latest
 WORKDIR /api
-CMD ["npm", "run", "start"]
+CMD ["go", "run", "main.go"]

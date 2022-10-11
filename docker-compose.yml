@@ -11,15 +11,19 @@ services:
         target: /api
     ports:
       - "3000:3000"
+    extra_hosts:
+      - localhost:172.18.0.1
 
   db:
-    build:
-      context: .
-      dockerfile: ./docker/backend/db/Dockerfile
+    image: postgres:alpine
+    container_name: foreign_news_db
+    tty: true
+    environment:
+      POSTGRES_USER: gorm
+      POSTGRES_PASSWORD: gorm
+      POSTGRES_DB: gorm
     ports:
-      - 5435:5436
-    volumes:
-      - ./data:/var/lib/mysql
+      - 5432:5432
 
   frontend:
     build:

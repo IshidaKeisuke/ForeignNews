@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM postgres:alpine
 
 ENV MYSQL_ROOT_PASSWORD root
 ENV MYSQL_DATABASE database
