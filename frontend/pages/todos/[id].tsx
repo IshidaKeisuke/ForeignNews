@@ -12,7 +12,7 @@ export default ({ todo }) => {
 }
 
 export const getStaticPaths = async () => {
-  const res = await fetch("http://localhost:8080/")
+  const res = await fetch("http://localhost:3000/todos")
   const todos = await res.json()  
 
   const paths = todos.map((todo: any) => ({
@@ -24,7 +24,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({params}: {params: any}) => {  
-  const res = await fetch(`http://localhost:8080/${params.id}`)
+  const res = await fetch(`http://localhost:3000/todos/${params.id}`)
   const todo = await res.json()  
 
   // ページコンポーネントにpropsとしてに渡す

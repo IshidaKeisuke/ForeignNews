@@ -2,7 +2,6 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	// "foreignnews/controllers"
 	"foreignnews/handlers"
 
 )
@@ -19,6 +18,7 @@ func router() *gin.Engine {
 		{
 			todo.POST("", todohandlers.CreateTodoHandler)
 			todo.GET("", todohandlers.ListTodosHandler)
+			todo.GET("/:id", todohandlers.FindTodoHandler)
 		}
 		return r
 }

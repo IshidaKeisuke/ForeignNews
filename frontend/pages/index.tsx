@@ -1,21 +1,22 @@
 import type { NextPage } from 'next'
-import { useState } from "react";
-
 import Link from 'next/link'
-
 import Head from 'next/head'
 import Image from 'next/image'
+import fetch from 'node-fetch'
+
 import styles from '../styles/Home.module.css'
 import TodoForm from '../components/todos/TodoForm'
 
-export interface Message {
-  message: string;
+export interface Todo {
+  ID: number;
+  Title: string;
+  Description: string;
 }
 interface Props {
-  messages: Message[]
+  todos: Todo[]
 }
 
-const Home: NextPage<Props> = ({messages}) => {
+const Home: NextPage<Props> = ({todos}) => {
 
   return (
     <>
@@ -25,18 +26,17 @@ const Home: NextPage<Props> = ({messages}) => {
           {/* <TodoForm /> */}
         </h2>
         <ul>
-          {messages.map((message, index) => (
-            <li>
-                {/* <Link 
-                  href={{
-                    pathname: '/todos/[id]',
-                    query: {id: todo.id},
-                  }}
-                >
-                  <p>{todo.id}</p>
-                </Link> */}
-                  <p>{message.message}</p>
-
+          {todos?.map((todo, index) => (
+            <li key={todo.ID}>
+              <Link 
+                href={{
+                  pathname: '/todos/[id]',
+                  query: {id: todo.ID},
+                }}
+              >
+                <p>{todo.Title}</p>
+              </Link>
+              <p>{todo.Description}</p>
             </li>
           ))}
         </ul>
@@ -45,13 +45,12 @@ const Home: NextPage<Props> = ({messages}) => {
   )
 }
 
-export const getStaticProps = async () => {
-  const response = await fetch("http://localhost:8080/", {method: "GET"});
-  const messages = await response.json();
-  console.log(messages)
+export const getServerSideProps = async () => {
+  const response = await fetch("http://localhost:3000/todos", {method: "GET"});
+  const todos = await response.json();
   return {
     props: {
-      messages,
+      todos
     },
   }
 }

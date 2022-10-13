@@ -6,8 +6,7 @@ import (
 )
 
 func main() {
-	db.Init()
+	db.ConnectDatabase()
 	routes.Init()
 
-	db.Close()
 }

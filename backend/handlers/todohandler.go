@@ -1,21 +1,14 @@
 package todohandlers
 
 import (
+	"foreignnews/db"
 	"foreignnews/model"
 	"net/http"
-	"time"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rs/xid"
 )
 
-var todos []model.Todo
-
-func init() {
-	todos = make([]model.Todo, 0)
-}
-
+// 新規作成
 func CreateTodoHandler(c *gin.Context) {
 	var todo model.Todo
 
@@ -26,16 +19,26 @@ func CreateTodoHandler(c *gin.Context) {
 		return
 	}
 
-	// ユニークなIDを作成
-	todo.ID = xid.New().String()
+	create_todo := model.Todo{Title: todo.Title, Description: todo.Description, PublishedAt: todo.PublishedAt}
+	db.DB.Create(&create_todo)
 
-	// 現在時刻を追加
-	todo.PublishedAt = time.Now()
-	todos = append(todos, todo)
-	c.JSON(http.StatusOK, todo)
+	c.JSON(http.StatusOK, create_todo)
 }
 
-func ListTodosHandler(c *gin.Context){
-	// c.JSON(http.StatusOK, todos)
-	fmt.Println("Hello World")
+// 一覧取得
+func ListTodosHandler(c *gin.Context) {
+	var todos []model.Todo
+	db.DB.Find(&todos)
+
+	c.JSON(http.StatusOK, todos)
+}
+
+// とある1件の値を取得
+func FindTodoHandler(c *gin.Context) {
+	var todo model.Todo
+	if err := db.DB.Where("id = ?", c.Param("id")).First(&todo).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, todo)
 }
