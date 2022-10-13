@@ -45,7 +45,7 @@ const Home: NextPage<Props> = ({todos}) => {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const response = await fetch("http://localhost:3000/todos", {method: "GET"});
   const todos = await response.json();
   return {
