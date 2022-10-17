@@ -16,6 +16,8 @@ services:
     image: postgres:alpine
     container_name: foreign_news_db
     tty: true
+    # volumes:
+    #    - db-store:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: gorm
       POSTGRES_PASSWORD: gorm

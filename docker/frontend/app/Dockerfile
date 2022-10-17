@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:16.18.0-slim
 EXPOSE 3333
 WORKDIR /app
 
