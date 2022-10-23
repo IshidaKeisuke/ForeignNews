@@ -1,2 +1,1 @@
-# ForeignNews
-# newsapp
+# 海外からの情報をとってくるサイト
