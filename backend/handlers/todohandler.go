@@ -1,10 +1,10 @@
 package todohandlers
 
 import (
+	"fmt"
 	"foreignnews/db"
 	"foreignnews/model"
 	"net/http"
-	"fmt"
 
 	// "time"
 
@@ -59,4 +59,19 @@ func UpdateTodoHandler(c *gin.Context) {
 
 	db.DB.Save(&todo)
 	c.JSON(200, todo)
+}
+
+// 削除
+func DeleteTodoHandler(c *gin.Context) {
+	id := c.Params.ByName("id")
+	var todo model.Todo
+
+	if err := db.DB.Where("id = ?", id).First(&todo).Error; err != nil {
+		c.AbortWithStatus(404)
+		fmt.Println(err)
+	}
+
+	c.ShouldBind(&todo)
+	db.DB.Delete(&todo)
+	c.JSON(http.StatusOK, todo)
 }

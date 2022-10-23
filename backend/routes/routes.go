@@ -20,7 +20,6 @@ func router() *gin.Engine {
 			AllowMethods: []string{
 					"POST",
 					"GET",
-					"OPTIONS",
 					"PUT",
 					"DELETE",
 			},
@@ -54,6 +53,7 @@ func router() *gin.Engine {
 			todo.GET("", todohandlers.ListTodosHandler)
 			todo.GET("/:id", todohandlers.FindTodoHandler)
 			todo.PUT("/:id", todohandlers.UpdateTodoHandler)
+			todo.DELETE("/:id", todohandlers.DeleteTodoHandler)
 		}
 		return r
 }

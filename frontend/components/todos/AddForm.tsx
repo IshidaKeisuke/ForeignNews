@@ -2,9 +2,7 @@ import { useState } from "react";
 import Link from 'next/link'
 
 interface Props {
-  addTodo: (title: string, description: string) => {
-
-  }
+  addTodo: (title: string, description: string) => {}
 }
 
 const TodoForm = ({ addTodo }: Props) => {

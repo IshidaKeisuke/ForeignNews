@@ -3,28 +3,30 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TodoForm from '../../components/todos/AddForm'
 import { Todo } from '../../types'
-import { title } from 'process'
 
 const Home: NextPage = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const addTodos = async (title: string, description: string) => {
+  const addTodos = async  (title: string, description: string) => {
     const res = await fetch('http://localhost:3000/todos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({title, description})
     });
-    const json = await res.json();
+    const json: Todo = await res.json();
+    console.log(json)
+    setTodos([...todos, json])
   }
 
   const deleteTodo = async (id: number) => {
-    const res = await fetch('http://localhost:3000/todos', {
-      method: 'GET',
+    const res = await fetch(`http://localhost:3000/todos/${id}`, {
+      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({id})
     })
-    const json = await res.json();
-    console.log(json)
+    const json: Todo = await res.json();
+    setTodos((current) =>
+      current.filter((todo) => todo.id !== id)
+    );
   }
 
   useEffect(() => {
@@ -33,10 +35,10 @@ const Home: NextPage = () => {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       });
-      const todos = await res.json();
-	  setTodos(todos)
+      const todo: Todo[] = await res.json();
+      setTodos(todo)
     })()
-  }, [todos])
+  }, [])
 
   return (
     <>
