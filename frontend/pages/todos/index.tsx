@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TodoForm from '../../components/todos/AddForm'
+import LoginButton from '../../components/auth/LoginButton'
 import { Todo } from '../../types'
 
 const Home: NextPage = () => {
@@ -42,6 +43,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <LoginButton/>
       <div>
         <h2>Todo追加</h2>
           <TodoForm addTodo={addTodos} />

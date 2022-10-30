@@ -10,7 +10,7 @@ services:
         source: ./backend
         target: /api
     ports:
-      - "3000:8080"
+      - "4545:3000"
 
   db:
     image: postgres:alpine
@@ -35,4 +35,4 @@ services:
         source: ./frontend
         target: /app
     ports:
-      - "4545:3333"
+      - "3000:3333"
